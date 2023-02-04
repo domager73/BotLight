@@ -1,5 +1,7 @@
 ﻿#region Assistents
-int InputInt(string massage) 
+using System.Linq.Expressions;
+
+int InputInt(string massage)
 {
     bool check = false;
     int number;
@@ -34,12 +36,12 @@ char[,] FieldCreation(ref int XPlayer, ref int YPlayer, ref int XPortal, ref int
                 XPlayer = j;
                 fieldLVL1[i, j] = 'a';
             }
-            else if (strfield[j] == 'O')
+            else if (strfield[j] == '0')
             {
                 YPortal = i;
                 XPortal = j;
             }
-            else 
+            else
             {
                 fieldLVL1[i, j] = strfield[j];
             }
@@ -49,6 +51,18 @@ char[,] FieldCreation(ref int XPlayer, ref int YPlayer, ref int XPortal, ref int
     reader.Close();
 
     return fieldLVL1;
+}
+
+void CheckVin(int XPlayer, int YPlayer, int XPortal, int YPortal)
+{
+    if (XPlayer == XPortal && YPlayer == YPortal)
+    {
+        Console.WriteLine("Вы смогли пройти уровень");
+    }
+    else
+    {
+        Console.WriteLine("Вы проиграли, попробуйте изменить ходы");
+    }
 }
 
 void PrintField(char[,] field, int YPlayer, int XPlayer, int XPortal, int YPortal)
@@ -64,7 +78,7 @@ void PrintField(char[,] field, int YPlayer, int XPlayer, int XPortal, int YPorta
             }
             else if (YPortal == i && XPortal == j)
             {
-                Console.Write('O');
+                Console.Write('0');
             }
             else
             {
@@ -79,7 +93,7 @@ void PrintField(char[,] field, int YPlayer, int XPlayer, int XPortal, int YPorta
 #region Move
 char[] ReadMoves()
 {
-    StreamReader reader = new StreamReader("moves.txt");
+    StreamReader reader = new StreamReader(@"C:\Users\user\Desktop\move.txt");
 
     char[] moves = reader.ReadLine().ToCharArray();
 
@@ -88,26 +102,16 @@ char[] ReadMoves()
     return moves;
 }
 
-bool CheckTrap(char[,] field, int XPlayer, int YPlayer) 
+bool CheckMove(int YPlayer, int XPlayer, char[,] field)
 {
-    bool check = true;
-
-    for (int i = 0; i < field.GetLength(0); i++) 
+    try
     {
-        for (int j = 0; j < field.GetLength(1); j++)
-        {
-            if (field[i, j] != 'a' && YPlayer == i && XPlayer == j)
-            {
-                check = false;
-            }
-            else if(!(YPlayer < 0 || YPlayer > field.Length || YPlayer < 0 || YPlayer < field.Length))
-            {
-                check = false;
-            }
-        }
+        return field[YPlayer, XPlayer] == '#' ? true : false;
     }
-
-    return check;
+    catch 
+    {
+        return true;
+    }
 }
 
 void Move(ref int XPlayer, ref int YPlayer, char move, char[,] field, ref bool checkLoss)
@@ -117,8 +121,10 @@ void Move(ref int XPlayer, ref int YPlayer, char move, char[,] field, ref bool c
         case 'w':
             {
                 YPlayer--;
-                if (YPlayer <= 0 && CheckTrap(field, XPlayer, YPlayer))
+                if (CheckMove(YPlayer, XPlayer, field) && YPlayer < 1)
                 {
+                    YPlayer++;
+
                     checkLoss = false;
                 }
                 break;
@@ -126,8 +132,10 @@ void Move(ref int XPlayer, ref int YPlayer, char move, char[,] field, ref bool c
         case 's':
             {
                 YPlayer++;
-                if (YPlayer > field.GetLength(0) - 1 && CheckTrap(field, XPlayer, YPlayer))
+                if (CheckMove(YPlayer, XPlayer, field) || YPlayer > field.GetLength(0) -1)
                 {
+                    YPlayer--;
+
                     checkLoss = false;
                 }
 
@@ -136,8 +144,10 @@ void Move(ref int XPlayer, ref int YPlayer, char move, char[,] field, ref bool c
         case 'a':
             {
                 XPlayer--;
-                if (XPlayer <= 0 && CheckTrap(field, XPlayer, YPlayer))
+                if (CheckMove(YPlayer, XPlayer, field) || XPlayer < 1)
                 {
+                    XPlayer++;
+
                     checkLoss = false;
                 }
 
@@ -146,8 +156,10 @@ void Move(ref int XPlayer, ref int YPlayer, char move, char[,] field, ref bool c
         case 'd':
             {
                 XPlayer++;
-                if (XPlayer > field.GetLength(1) - 1 && CheckTrap(field, XPlayer, YPlayer))
+                if (CheckMove(YPlayer, XPlayer, field) || XPlayer > field.GetLength(1) -1)
                 {
+                    YPlayer--;
+
                     checkLoss = false;
                 }
 
@@ -163,18 +175,19 @@ void Move(ref int XPlayer, ref int YPlayer, char move, char[,] field, ref bool c
 }
 #endregion
 
-int XPlayer = 0;
-int YPlayer = 0;
-int XPortal = 0;
-int YPortal = 0;
 bool stopGame = true;
 
 while (stopGame)
 {
+    int XPlayer = 0;
+    int YPlayer = 0;
+    int XPortal = 0;
+    int YPortal = 0;
+
     Console.WriteLine("Уровень 1: light \nУровень 2: middle\nУровень 3: harde");
     int level = InputInt("Введите уровень: ");
 
-    char[,] field = FieldCreation(ref XPlayer, ref YPlayer, ref XPortal, ref YPortal, $"{level}level.txt");
+    char[,] field = FieldCreation(ref XPlayer, ref YPlayer, ref XPortal, ref YPortal, $@"C:\Users\user\Desktop\{level}level.txt");
     char[] moves = ReadMoves();
     bool chekLoss = true;
     int count = 0;
@@ -192,19 +205,10 @@ while (stopGame)
 
         Console.Clear();
 
-        if (!chekLoss)
-        {
-            Console.WriteLine("Play lose your player has gone abroad");
-        }
-
         count++;
     }
 
-    if (XPlayer == XPortal && YPlayer == YPortal)
-    {
-        Console.WriteLine("Вы смогли пройти уровень");
-    }
-    Console.Clear();
+    CheckVin(XPlayer, YPlayer, XPortal, YPortal);
+
     Console.ReadLine();
 }
-
