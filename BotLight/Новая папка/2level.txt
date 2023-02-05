@@ -1,0 +1,12 @@
+10
+10
+Xaaa#aaaaa
+aaa##aaaaa
+aaaaaa###a
+aaa##aaaaa
+###aaaaa##
+aaaaa#a#aa
+aa###aaaaa
+aa#aaa#aaa
+aa#aa0aaaa
+a#aaaaaaaa

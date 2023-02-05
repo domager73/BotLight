@@ -225,6 +225,8 @@ while (stopGame)
             } 
         case 2:
             {
+                Console.WriteLine("Введите ");
+
                 Console.WriteLine("Укажите место на диске: ");
 
                 level = Console.ReadLine();

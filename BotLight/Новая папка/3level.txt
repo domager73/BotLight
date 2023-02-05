@@ -1,0 +1,16 @@
+14
+14
+aaa#aaaaaaaaaa
+a#a#a#aa#aaaaa
+aaaaaaaaa#aaaa
+a#a#a#a##aaaaa
+aaaaaaaaa#aaaa
+a###aaaaa#aaaa
+aaa#aaaaa#aaaa
+aaa#aaaaa#####
+##a####aa#aaaa
+aaaaaaaaa#aaaa
+aaa####aaaaaaa
+aa#a#a#######a
+aa#a0aaa#aaa#a
+aa#aaa#aaa#aaa
