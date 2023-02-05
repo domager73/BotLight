@@ -220,7 +220,7 @@ while (stopGame)
                 Console.WriteLine("Уровень 1: light \nУровень 2: middle\nУровень 3: harde");
 
                 int numberLevel = InputInt("Введите уровень: ");
-                level = $"{numberLevel}level.txt";
+                level = @$"C:\Users\user\source\repos\BotLigh\BotLight\Новая папка\{numberLevel}level.txt";
                 break;
             } 
         case 2:
