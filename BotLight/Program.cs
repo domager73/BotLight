@@ -205,6 +205,7 @@ void Move(ref Coordinate Player, char move, char[,] field, ref bool checkLoss)
 }
 #endregion
 
+#region
 bool stopGame = true;
 
 while (stopGame)
@@ -220,7 +221,7 @@ while (stopGame)
                 Console.WriteLine("Уровень 1: light \nУровень 2: middle\nУровень 3: harde");
 
                 int numberLevel = InputInt("Введите уровень: ");
-                level = @$"C:\Users\user\source\repos\BotLigh\BotLight\Новая папка\{numberLevel}level.txt";
+                level = @$"Новая папка\{numberLevel}level.txt";
                 break;
             } 
         case 2:
@@ -272,3 +273,4 @@ while (stopGame)
 
     Console.ReadLine();
 }
+#endregion
