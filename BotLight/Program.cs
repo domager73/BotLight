@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Tracing;
-using System.Reflection.PortableExecutable;
-using XY;
+﻿using XY;
 
 #region Assistents
 int InputInt(string massage)
@@ -220,6 +218,7 @@ while (stopGame)
         case 1: 
             {
                 Console.WriteLine("Уровень 1: light \nУровень 2: middle\nУровень 3: harde");
+
                 int numberLevel = InputInt("Введите уровень: ");
                 level = $"{numberLevel}level.txt";
                 break;
