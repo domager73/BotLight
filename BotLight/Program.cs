@@ -205,7 +205,7 @@ void Move(ref Coordinate Player, char move, char[,] field, ref bool checkLoss)
 }
 #endregion
 
-#region
+#region Main
 bool stopGame = true;
 
 while (stopGame)
